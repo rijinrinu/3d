@@ -1,0 +1,27 @@
+customerrequirement(request): 
+""" 
+The function for customer requirement 
+ 
+
+ 
+Parameters: 
+HTTP request 
+ 
+ 
+Returns: html page 
+""" email=request.session["email"] msg="" if(request.POST): 
+bed=request.POST["txtBed"] bath=request.POST["txtBath"] 
+
+attached=request.POST["txtAttached"] car=request.POST["txtCar"] kitchen=request.POST["txtKitchen"] 
+
+sitout=request.POST["txtSitout"] work=request.POST["txtWork"] floor=request.POST["txtFloor"] sqft=request.POST["txtSqft"] other=request.POST["txtOther"] 
+s="insert into 
+tblrequirement(cEmail,bedroom,bathroom,attached,carporch,kitchen,sitout,workarea,floor,sqft,other,req Date,reqStatus) 
+values('"+email+"','"+bed+"','"+bath+"','"+attached+"','"+car+"','"+kitchen+"','"+sitout+"','"+work+"','"+f loor+"','"+sqft+"','"+other+"',(select sysdate()),'requested')" try: 
+c.execute(s) db.commit() except: 
+msg="Sorry some error occured" else: 
+msg="Requirement submitted" 
+s="Select * from tblrequirement where cEmail='"+email+"' and tblrequirement.reqStatus<>'plan approved'" 
+c.execute(s) 
+data=c.fetchall() 
+return render(request,"customerrequirement.html",{"msg":msg,"data":data}) 
