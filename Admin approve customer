@@ -1,0 +1,26 @@
+adminapproveuser(request): 
+""" 
+The function to approve users 
+ 
+
+ 
+
+Parameters: 
+HTTP request 
+ 
+ 
+Returns: html page """ 
+email=request.GET.get("id") status=request.GET.get("status") url=request.GET.get("url") 
+s="update tbllogin set status='"+status+"' where username='"+email+"'" 
+c.execute(s) db.commit() 
+c.execute("select utype from tbllogin where username='"+email+"'") k=c.fetchone() if(k[0]=='architect'): 
+n="Select aContact from tblarchitect where aEmail='"+email+"'" 
+c.execute(n) d=c.fetchone() contact=d[0] 
+msg="Your registeration is approved" sendsms(contact,msg) if(k[0]=='designer'): 
+n="Select dContact from tbldesigner where dEmail='"+email+"'" c.execute(n) d=c.fetchone() contact=d[0] 
+msg="Your registeration is approved" sendsms(contact,msg) if(k[0]=='contractor'): 
+n="Select cContact from tblcontractor where cEmail='"+email+"'" 
+c.execute(n) d=c.fetchone() contact=d[0] 
+msg="Your registeration is approved" sendsms(contact,msg) if(k[0]=='customer'): 
+n="Select cContact from tblcustomer where cEmail='"+email+"'" 
+c.execute(n) d=c.fetchone() contact=d[0] 
