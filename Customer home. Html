@@ -1,0 +1,15 @@
+customerhome(request): 
+""" 
+The function for customer home 
+ 
+
+ 
+Parameters: 
+HTTP request 
+ 
+ 
+Returns: html page """ 
+email=request.session["email"] 
+s="select * from tblcustomer where cEmail='"+email+"'" 
+c.execute(s) data=c.fetchall() 
+return render(request,"customerhome.html",{"data":data}) 
