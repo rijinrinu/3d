@@ -1,0 +1,20 @@
+Parameters: 
+HTTP request 
+ 
+Returns: html page 
+""" 
+msg="" if(request.POST): 
+email=request.POST.get("txtEmail") pwd=request.POST.get("txtPassword") 
+s="select count(*) from tbllogin where username='"+email+"'" 
+c.execute(s) i=c.fetchone() if(i[0]>0): s="select * from tbllogin where username='"+email+"'" c.execute(s) i=c.fetchone() if(i[1]==pwd): 
+request.session['email'] = email if(i[3]=="1"): if(i[2]=="admin"): 
+return HttpResponseRedirect("/adminhome") elif(i[2]=="architect"): 
+return HttpResponseRedirect("/architecthome") elif(i[2]=="designer"): 
+return HttpResponseRedirect("/designerhome") elif(i[2]=="contractor"): 
+return HttpResponseRedirect ("/contractor home") elf (I [2] =="customer"): return 
+
+
+
+HttpResponseRedirect("/customerhome") else: msg="You are not authenticated to login" else: msg="Incorrect password" else: 
+msg="User doesnt exist" 
+return render(request,"login.html",{"msg":msg}) 
