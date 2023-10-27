@@ -1,0 +1,12 @@
+adminhome(request): 
+""" 
+The function for adminhome 
+ 
+
+ 
+Parameters: 
+HTTP request 
+ 
+ 
+Returns: html page """ 
+return render(request,"adminhome.html") 
