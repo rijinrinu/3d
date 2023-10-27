@@ -1,0 +1,26 @@
+CUSTOMER PLAN UPDATE
+customerplanupdate(request): 
+""" 
+The function to update plan status 
+ 
+
+ 
+Parameters: 
+HTTP request 
+ 
+ 
+Returns: html page """ 
+pid=request.GET.get("id") status=request.GET.get("status") 
+
+url=request.GET.get("url") rid=request.GET.get("rid") 
+s="update tblplan set planStatus='"+status+"' where planId='"+pid+"'" try: 
+c.execute(s) db.commit() 
+
+except: 
+pass else: if(status=="approved"): 
+status1="rejected" elif(status=="rejected"): status1="approved" 
+s="update tblplan set planStatus='"+status1+"' where reqId='"+rid+"' and planId<>'"+pid+"'" try: 
+c.execute(s) db.commit() except: pass else: if(status=="approved"): status="plan approved" 
+s="update tblrequirement set reqStatus='"+status+"' where reqId='"+rid+"'" try: 
+c.execute(s) db.commit() except: pass else: return HttpResponseRedirect("/"+url+"?id="+pid) else: 
+return HttpResponseRedirect("/"+url) 
