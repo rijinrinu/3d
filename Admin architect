@@ -1,0 +1,13 @@
+adminarchitect(request): 
+The function for architect details for admin 
+ 
+
+ 
+Parameters: 
+HTTP request 
+ 
+ 
+Returns: html page """ 
+s="select * from tblarchitect where aEmail in(select username from tbllogin where status='0')" c.execute(s) data=c.fetchall() 
+s="select * from tblarchitect where aEmail in(select username from tbllogin where status='1')" c.execute(s) data1=c.fetchall() 
+return render(request,"adminarchitect.html",{"data":data,"data1":data1}) 
