@@ -1,0 +1,28 @@
+customer(request): 
+""" 
+The function for customer registration 
+ 
+
+ 
+Parameters: 
+HTTP request 
+ 
+ 
+Returns: html page 
+""" 
+msg="" if(request.POST): 
+name=request.POST.get("txtName") address=request.POST.get("txtAddress") contact=request.POST.get("txtContact") email=request.POST.get("txtEmail") pwd=request.POST.get("txtPassword") aadhar=request.FILES["txtaadhar"] fs=FileSystemStorage() 
+filename=fs.save(aadhar.name,aadhar) uploaded_file_url=fs.url(filename) 
+s="select count(*) from tbllogin where username='"+str(email)+"'" c.execute(s) i=c.fetchone() if(i[0]>0): 
+msg="User already registered" else: 
+s="insert into tblcustomer(cName,cAddress,cContact,cEmail,aadhar) values('"+str(name)+"','"+str(address)+"','"+str(contact)+"','"+str(email)+"','"+str(uploaded_file_url)+"')" try: 
+c.execute(s) db.commit() except: 
+msg="Sorry registration error" else: 
+
+
+
+s="insert into tbllogin (username,password,utype,status) values('"+str(email)+"','"+str(pwd)+"','customer','1')" try: 
+c.execute(s) db.commit() except: 
+msg="Sorry login error" else: 
+msg="Registration successfull" 
+return render(request,"customer.html",{"msg":msg}) 
